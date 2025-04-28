@@ -1,0 +1,13 @@
+# Idea & editor config directories
+.idea
+.vscode
+
+# Python cache files
+__pycache__
+*.pyc
+
+
+# Possible Python virtual environments
+.venv
+env
+venv
