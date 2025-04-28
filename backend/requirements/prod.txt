@@ -1,2 +1,7 @@
+# Django & DRF packages
 django==4.2.16
 djangorestframework==3.16.0
+
+# Others
+python-dotenv==1.1.0
+psycopg2-binary==2.9.10
