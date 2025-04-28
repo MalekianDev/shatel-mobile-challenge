@@ -24,6 +24,12 @@ from drf_spectacular.views import (
 )
 
 from accounts.urls import jwt_urlpatterns
+from accounts.urls import urlpatterns_api_v1 as accounts_urlpatterns_api_v1
+
+urlpatterns_api_v1 = [
+    path("accounts/", include((accounts_urlpatterns_api_v1, "accounts"))),
+]
+
 
 swagger_urlpatterns = [
     path("", SpectacularAPIView.as_view(), name="schema"),
@@ -37,6 +43,9 @@ swagger_urlpatterns = [
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    # Non-versioned API endpoints
     path("api/schema/", include(swagger_urlpatterns)),
     path("api/auth/", include(jwt_urlpatterns)),
+    # Versioned API endpoints
+    path("api/v1/", include(urlpatterns_api_v1)),
 ]
