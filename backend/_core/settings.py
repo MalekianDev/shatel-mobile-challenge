@@ -115,17 +115,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-DEBUG_AUTHENTICATION_CLASSES = ()
+# Add basic/session authentication classes if DEBUG is True else only JWT to prevent security issues in production.
+DEFAULT_AUTHENTICATION_CLASSES = ("rest_framework_simplejwt.authentication.JWTAuthentication",)
 if DEBUG:
-    DEBUG_AUTHENTICATION_CLASSES = (
+    DEFAULT_AUTHENTICATION_CLASSES += (
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     )
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
-    "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",)
-    + DEBUG_AUTHENTICATION_CLASSES,
+    "DEFAULT_AUTHENTICATION_CLASSES": DEFAULT_AUTHENTICATION_CLASSES,
     "DEFAULT_CONTENT_TYPE": "application/json",
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
