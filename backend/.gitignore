@@ -14,3 +14,6 @@ venv
 
 # Security stuffs
 secrets.env
+
+# Django stuffs
+media/*

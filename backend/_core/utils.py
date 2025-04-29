@@ -1,6 +1,6 @@
-from rest_framework import serializers
+from django.core.exceptions import ValidationError
 
 
 def validate_csv_file(value: str) -> None:
     if not value.name.endswith(".csv"):
-        raise serializers.ValidationError({"file": "Only CSV files are allowed."})
+        raise ValidationError("Only CSV files are allowed.")
