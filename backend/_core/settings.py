@@ -37,15 +37,19 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", default="127.0.0.1 localhost").split(
 # Application definition
 
 INSTALLED_APPS = [
+    # Django built-in apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Third party apps
     "rest_framework",
     "drf_spectacular",
+    # Local apps
     "accounts",
+    "notifications",
 ]
 
 MIDDLEWARE = [
