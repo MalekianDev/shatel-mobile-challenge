@@ -15,6 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import (
@@ -25,9 +27,11 @@ from drf_spectacular.views import (
 
 from accounts.urls import jwt_urlpatterns
 from accounts.urls import urlpatterns_api_v1 as accounts_urlpatterns_api_v1
+from notifications.urls import urlpatterns_api_v1 as notifications_urlpatterns_api_v1
 
 urlpatterns_api_v1 = [
     path("accounts/", include((accounts_urlpatterns_api_v1, "accounts"))),
+    path("notifications/", include((notifications_urlpatterns_api_v1, "notifications"))),
 ]
 
 
@@ -49,3 +53,6 @@ urlpatterns = [
     # Versioned API endpoints
     path("api/v1/", include(urlpatterns_api_v1)),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

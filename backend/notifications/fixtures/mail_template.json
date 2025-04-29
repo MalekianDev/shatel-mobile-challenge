@@ -1,0 +1,13 @@
+[
+    {
+      "model": "notifications.mailtemplate",
+      "pk": 1,
+      "fields": {
+        "name": "Default",
+        "body": "Your national ID: {{ national_id }}, this is a default email template for {{ email }}.",
+        "created_at": "2025-01-01T00:00:00Z",
+        "updated_at": "2025-01-01T00:00:00Z",
+        "creator": 1
+      }
+    }
+]
