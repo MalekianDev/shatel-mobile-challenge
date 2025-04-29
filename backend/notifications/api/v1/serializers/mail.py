@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from _core.serializers import CreatorBaseSerializer
 from notifications.choices import MailBulkStatusChoices
-from notifications.models import MailBulk
+from notifications.models import MailBulk, MailTemplate
 
 
 class MailBulkSerializer(CreatorBaseSerializer):
@@ -36,5 +36,21 @@ class MailBulkSerializer(CreatorBaseSerializer):
 
         if errors:
             raise serializers.ValidationError(errors)
+
+        return super().update(instance, validated_data)
+
+
+class MailTemplateSerializer(CreatorBaseSerializer):
+    class Meta:
+        model = MailTemplate
+        fields = "__all__"
+
+    def update(self, instance: MailTemplate, validated_data):
+        if instance.bulk_mails.filter(
+            status__in=(MailBulkStatusChoices.pending, MailBulkStatusChoices.paused, MailBulkStatusChoices.in_progress)
+        ).exists():
+            raise serializers.ValidationError(
+                {"mail_template": ["Cannot update a mail template with pending, paused or in progress mail bulks."]}
+            )
 
         return super().update(instance, validated_data)
