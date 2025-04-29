@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                         default=0,
                     ),
                 ),
-                ("file", models.FileField(upload_to="bulk_mails", validators=[_core.utils.validate_csv_file])),
+                ("file", models.FileField(upload_to="bulk_mails", validators=[_core.validators.validate_csv_file])),
                 (
                     "creator",
                     models.ForeignKey(

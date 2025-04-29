@@ -3,7 +3,7 @@ from __future__ import annotations
 from django.db import models
 
 from _core.models import CreatorBaseModel, TimestampedBaseModel
-from _core.utils import validate_csv_file
+from _core.validators import validate_csv_file
 from notifications.choices import MailBulkStatusChoices
 
 
