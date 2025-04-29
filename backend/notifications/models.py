@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from django.db import models
 
 from _core.models import CreatorBaseModel, TimestampedBaseModel
@@ -8,6 +10,9 @@ from notifications.choices import MailBulkStatusChoices
 class MailTemplate(TimestampedBaseModel, CreatorBaseModel):
     name = models.CharField(max_length=255)
     body = models.TextField()
+
+    # Reverse relations type hinting
+    bulk_mails: models.QuerySet[MailBulk]
 
     def __str__(self):
         return self.name
@@ -21,6 +26,9 @@ class MailBulk(TimestampedBaseModel, CreatorBaseModel):
     # Load fixtures for default template
     template = models.ForeignKey(MailTemplate, default=1, on_delete=models.PROTECT, related_name="bulk_mails")
 
+    # Reverse relations type hinting
+    detail: MailBulkDetail
+
     def __str__(self):
         return self.subject
 
@@ -30,7 +38,7 @@ class MailBulkDetail(TimestampedBaseModel):
     sent_count = models.IntegerField(default=0)
     duplicate_count = models.IntegerField(default=0)
 
-    parent = models.OneToOneField(MailBulk, on_delete=models.PROTECT, related_name="details")
+    parent = models.OneToOneField(MailBulk, on_delete=models.PROTECT, related_name="detail")
 
     def __str__(self):
         return f"{self.total_count} total email - {self.sent_count} sent - {self.duplicate_count} duplicate emails"
