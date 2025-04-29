@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class MailBulkStatus(models.IntegerChoices):
+class MailBulkStatusChoices(models.IntegerChoices):
     pending = 0, "Pending"
     cancelled = 1, "Cancelled"
     in_progress = 2, "In Progress"

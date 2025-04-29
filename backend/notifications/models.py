@@ -2,7 +2,7 @@ from django.db import models
 
 from _core.models import CreatorBaseModel, TimestampedBaseModel
 from _core.utils import validate_csv_file
-from notifications.choices import MailBulkStatus
+from notifications.choices import MailBulkStatusChoices
 
 
 class MailTemplate(TimestampedBaseModel, CreatorBaseModel):
@@ -15,7 +15,7 @@ class MailTemplate(TimestampedBaseModel, CreatorBaseModel):
 
 class MailBulk(TimestampedBaseModel, CreatorBaseModel):
     subject = models.CharField(max_length=255)
-    status = models.IntegerField(choices=MailBulkStatus.choices, default=MailBulkStatus.pending)
+    status = models.IntegerField(choices=MailBulkStatusChoices.choices, default=MailBulkStatusChoices.pending)
     file = models.FileField(upload_to="bulk_mails", validators=[validate_csv_file])
 
     # Load fixtures for default template
