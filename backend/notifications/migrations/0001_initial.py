@@ -26,7 +26,8 @@ class Migration(migrations.Migration):
                 (
                     "status",
                     models.IntegerField(
-                        choices=[(0, "Pending"), (1, "Cancelled"), (2, "In Progress"), (3, "Completed")], default=0
+                        choices=[(0, "Pending"), (1, "Cancelled"), (2, "In Progress"), (3, "Completed"), (4, "Paused")],
+                        default=0,
                     ),
                 ),
                 ("file", models.FileField(upload_to="bulk_mails", validators=[_core.utils.validate_csv_file])),
