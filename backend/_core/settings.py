@@ -151,10 +151,16 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Static & Media files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024  # Max size (5MB) for in-memory file uploads before using disk storage
+DATA_UPLOAD_MAX_MEMORY_SIZE = 100 * 1024 * 1024  # Max allowed size (100MB) for any file upload request
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
