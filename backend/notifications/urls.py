@@ -6,4 +6,5 @@ app_name = "notifications"
 
 urlpatterns_api_v1 = [
     path("mail/bulk/", v1_views.MailBulkListCreateAPIView.as_view(), name="mail-bulk-list-create"),
+    path("mail/bulk/<int:pk>/", v1_views.MailBulkRetrieveUpdateAPIView.as_view(), name="mail-bulk-detail"),
 ]

@@ -1,1 +1,1 @@
-from .mail import MailBulkListCreateAPIView  # noqa
+from .mail import MailBulkListCreateAPIView, MailBulkRetrieveUpdateAPIView  # noqa
