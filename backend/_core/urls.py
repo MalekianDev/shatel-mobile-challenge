@@ -27,9 +27,11 @@ from drf_spectacular.views import (
 
 from accounts.urls import jwt_urlpatterns
 from accounts.urls import urlpatterns_api_v1 as accounts_urlpatterns_api_v1
+from notifications.urls import urlpatterns_api_v1 as notifications_urlpatterns_api_v1
 
 urlpatterns_api_v1 = [
     path("accounts/", include((accounts_urlpatterns_api_v1, "accounts"))),
+    path("notifications/", include((notifications_urlpatterns_api_v1, "notifications"))),
 ]
 
 
