@@ -95,7 +95,7 @@ python manage.py loaddata mail_template.json
 ```
 8. Start celery:
 ```bash
-celery -A your_project_name worker -l info
+celery -A _core worker --loglevel=info
 ```
 9. Finally run the project:
 ```bash
