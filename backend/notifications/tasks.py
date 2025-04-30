@@ -14,7 +14,6 @@ def send_bulk_email_task(mail_bulk_id: int) -> None:
     mail_bulk = MailBulk.objects.filter(id=mail_bulk_id).first()
     if mail_bulk and mail_bulk.status not in (
         MailBulkStatusChoices.cancelled,
-        MailBulkStatusChoices.paused,
         MailBulkStatusChoices.completed,
     ):
         MailBulk.objects.filter(id=mail_bulk_id).update(status=MailBulkStatusChoices.in_progress)
