@@ -1,0 +1,131 @@
+# Bulk Email Service
+
+A Django-based service for sending bulk emails using customizable templates. This service allows you to manage email templates and send bulk emails to multiple recipients using CSV files.
+
+## Features
+
+- **Bulk Email Sending**: Send emails to multiple recipients using CSV files
+- **Email Templates**: Create and manage reusable email templates
+- **Status Management**: Track email sending progress with various statuses
+  - Pending
+  - In Progress
+  - Paused
+  - Cancelled
+  - Completed
+- **Detailed Statistics**: Track email sending statistics including:
+  - Total emails
+  - Sent count
+  - Duplicate count
+- **CSV File Support**: Upload recipient data via CSV files
+- **Pause/Resume Support**: Ability to pause and resume bulk email operations
+- **User Management**: Track creators of templates and bulk email tasks
+
+## Technical Stack
+
+- **Framework**: Django
+- **Task Queue**: Celery
+- **Data Processing**: Pandas (for CSV handling)
+- **Database**: Django ORM (supports multiple databases)
+
+## Models
+
+### MailTemplate
+- Name
+- Body (supports dynamic variables)
+- Creation/Update timestamps
+- Creator reference
+
+### MailBulk
+- Subject
+- Status tracking
+- CSV file upload
+- Template reference
+- Creation/Update timestamps
+- Creator reference
+
+### MailBulkDetail
+- Total count
+- Sent count
+- Duplicate count
+- Reference to parent MailBulk
+
+## API Endpoints
+
+### Mail Bulk Operations
+- `POST /api/v1/mail/bulk/`: Create new bulk email task
+- `GET /api/v1/mail/bulk/`: List all bulk email tasks
+- `GET /api/v1/mail/bulk/<id>/`: Retrieve specific bulk email task
+- `PATCH /api/v1/mail/bulk/<id>/`: Update bulk email task status
+
+### Mail Template Operations
+- `POST /api/v1/mail/template/`: Create new email template
+- `GET /api/v1/mail/template/`: List all email templates
+- `GET /api/v1/mail/template/<id>/`: Retrieve specific template
+- `PATCH /api/v1/mail/template/<id>/`: Update email template
+
+## CSV File Format
+The system expects CSV files with the following columns:
+- `email`: Recipient email address
+- `national_id`: National ID of the recipient
+
+## Template Variables
+Email templates support the following variables:
+- `{{ email }}`: Recipient's email address
+- `{{ national_id }}`: Recipient's national ID
+
+## Status Management Rules
+1. New bulk emails can only be created with 'pending' status
+2. Users can only update status to:
+   - In Progress
+   - Cancelled
+   - Paused
+3. Cannot update completed bulk emails
+4. Cannot update template if it has pending, paused, or in-progress bulk emails
+5. Cannot update CSV file after creation
+
+## Installation & Setup
+
+1. Clone the repository
+2. Install dependencies:
+```bash
+pip install -r requirements/all.txt
+```
+3. Copy the secrets.example.env to secrets.env:
+```bash
+cp secrets.example.env secrets.env
+```
+Then replace your own configs in secrets.env
+4. Run migrations:
+```bash
+python manage.py migrate
+```
+5. Create default user:
+```bash
+python manage.py create_default_user
+```
+7. Load fixtures:
+```bash
+python manage.py loaddata mail_template.json
+```
+8. Start celery:
+```bash
+celery -A your_project_name worker -l info
+```
+9. Finally run the project:
+```bash
+python manage.py runserver
+```
+
+## Security Features
+- Protected foreign keys (using on_delete=models.PROTECT )
+- CSV file validation
+- Status transition validation
+- Email uniqueness validation
+## Error Handling
+- Comprehensive validation for status transitions
+- File upload validation
+- Template update restrictions
+- Bulk email update restrictions
+## Performance Considerations
+- Chunk-based CSV processing (50 records per chunk)
+- Efficient database queries using select_related and prefetch_related
