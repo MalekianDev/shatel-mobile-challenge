@@ -11,11 +11,18 @@ from notifications.models import MailBulk
 
 @shared_task
 def send_bulk_email_task(mail_bulk_id: int) -> None:
-    mail_bulk = MailBulk.objects.filter(id=mail_bulk_id).first()
-    if mail_bulk and mail_bulk.status not in (
-        MailBulkStatusChoices.cancelled,
-        MailBulkStatusChoices.completed,
-    ):
+    """
+    Process bulk email sending task.
+
+    Note: This task only handles pending mail bulks. For interrupted tasks that are
+    stuck in "in_progress" status, a separate maintenance task should be implemented
+    to handle mail bulks that have been in "in_progress" status for too long.
+
+    Args:
+        mail_bulk_id (int): ID of the MailBulk to process
+    """
+    mail_bulk = MailBulk.objects.filter(id=mail_bulk_id, status=MailBulkStatusChoices.pending).first()
+    if mail_bulk:
         MailBulk.objects.filter(id=mail_bulk_id).update(status=MailBulkStatusChoices.in_progress)
 
         template = Template(mail_bulk.template.body)
