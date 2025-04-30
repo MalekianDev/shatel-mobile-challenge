@@ -4,9 +4,9 @@ import pandas as pd
 from celery import shared_task
 from django.template import Context, Template
 
-from _core.utils import send_email
+from _core.utils import send_email, count_csv_rows
 from notifications.choices import MailBulkStatusChoices
-from notifications.models import MailBulk
+from notifications.models import MailBulk, MailBulkDetail
 
 
 @shared_task
@@ -27,14 +27,23 @@ def send_bulk_email_task(mail_bulk_id: int) -> None:
 
         template = Template(mail_bulk.template.body)
 
+        detail = MailBulkDetail.objects.create(
+            parent=mail_bulk,
+            total_count=count_csv_rows(mail_bulk.file.path),
+        )
+
         chunks = pd.read_csv(mail_bulk.file, chunksize=50)
         for chunk in chunks:
+            chunk_size = len(chunk)
             for _, row in chunk.iterrows():
                 send_email(
                     to=row["email"],
                     subject=mail_bulk.subject,
                     body=template.render(Context({"national_id": row["national_id"], "email": row["email"]})),
                 )
+
+            detail.sent_count += chunk_size
+            detail.save(update_fields=["sent_count", "updated_at"])
 
             mail_bulk.refresh_from_db()
 
