@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # Third party apps
     "rest_framework",
     "drf_spectacular",
+    "django_celery_beat",
     # Local apps
     "accounts",
     "notifications",
@@ -150,6 +151,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+# Celery settings
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
+CELERY_TIMEZONE = TIME_ZONE
 
 # Static & Media files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

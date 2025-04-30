@@ -3,7 +3,11 @@ django==4.2.16
 djangorestframework==3.16.0
 drf-spectacular==0.28.0
 djangorestframework-simplejwt==5.5.0
+django-celery-beat==2.8.0
 
 # Others
 python-dotenv==1.1.0
 psycopg2-binary==2.9.10
+celery==5.5.2
+redis==5.2.1
+pandas==2.2.3

@@ -1,6 +1,7 @@
-from django.core.exceptions import ValidationError
-
-
-def validate_csv_file(value: str) -> None:
-    if not value.name.endswith(".csv"):
-        raise ValidationError("Only CSV files are allowed.")
+def send_email(to, subject, body):
+    """
+    Simple example function instead of "django.core.mail.send_mail" for simplicity.
+    Mentioned in document:
+    Please note that the implementation of the "send email" functionality is not required for this challenge.
+    """
+    print(f"Email sent to {to} with subject {subject} and message {body}")
