@@ -2,12 +2,10 @@ from rest_framework import serializers
 
 from _core.serializers import CreatorBaseSerializer
 from notifications.choices import MailBulkStatusChoices
-from notifications.models import MailBulk, MailTemplate
+from notifications.models import MailBulk, MailTemplate, MailBulkDetail
 
 
 class MailBulkSerializer(CreatorBaseSerializer):
-    status_display = serializers.CharField(source="get_status_display", read_only=True)
-
     class Meta:
         model = MailBulk
         fields = "__all__"
@@ -55,3 +53,11 @@ class MailTemplateSerializer(CreatorBaseSerializer):
             )
 
         return super().update(instance, validated_data)
+
+
+class MailBulkDetailSerializer(serializers.ModelSerializer):
+    status = serializers.CharField(source="parent.get_status_display", read_only=True)
+
+    class Meta:
+        model = MailBulkDetail
+        fields = "__all__"

@@ -3,4 +3,5 @@ from .mail import (  # noqa
     MailBulkRetrieveUpdateAPIView,
     MailTemplateListCreateAPIView,
     MailTemplateRetrieveUpdateAPIView,
+    MailBulkDetailRetrieveAPIView,
 )

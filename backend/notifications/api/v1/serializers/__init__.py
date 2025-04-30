@@ -1,1 +1,1 @@
-from .mail import MailBulkSerializer, MailTemplateSerializer  # noqa
+from .mail import MailBulkSerializer, MailTemplateSerializer, MailBulkDetailSerializer  # noqa
