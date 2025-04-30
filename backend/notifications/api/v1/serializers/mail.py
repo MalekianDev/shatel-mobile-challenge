@@ -30,9 +30,10 @@ class MailBulkSerializer(CreatorBaseSerializer):
 
         new_status = validated_data.get("status")
         if (
-            new_status not in (MailBulkStatusChoices.cancelled, MailBulkStatusChoices.paused)
+            new_status
+            not in (MailBulkStatusChoices.cancelled, MailBulkStatusChoices.paused, MailBulkStatusChoices.in_progress)
         ) and instance.status != new_status:
-            errors.setdefault("status", ["User can only set the status to cancelled or paused."])
+            errors.setdefault("status", ["User can only set the status to in progress, cancelled or paused."])
 
         if errors:
             raise serializers.ValidationError(errors)
