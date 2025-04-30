@@ -49,20 +49,6 @@ A Django-based service for sending bulk emails using customizable templates. Thi
 - Duplicate count
 - Reference to parent MailBulk
 
-## API Endpoints
-
-### Mail Bulk Operations
-- `POST /api/v1/mail/bulk/`: Create new bulk email task
-- `GET /api/v1/mail/bulk/`: List all bulk email tasks
-- `GET /api/v1/mail/bulk/<id>/`: Retrieve specific bulk email task
-- `PATCH /api/v1/mail/bulk/<id>/`: Update bulk email task status
-
-### Mail Template Operations
-- `POST /api/v1/mail/template/`: Create new email template
-- `GET /api/v1/mail/template/`: List all email templates
-- `GET /api/v1/mail/template/<id>/`: Retrieve specific template
-- `PATCH /api/v1/mail/template/<id>/`: Update email template
-
 ## CSV File Format
 The system expects CSV files with the following columns:
 - `email`: Recipient email address
