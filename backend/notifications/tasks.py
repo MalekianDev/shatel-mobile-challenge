@@ -15,7 +15,7 @@ def send_bulk_email_task(mail_bulk_id: int) -> None:
     Process bulk email sending task.
 
     Note: This task only handles pending mail bulks. For interrupted tasks that are
-    stuck in "in_progress" status, a separate maintenance task should be implemented
+    stuck in "in_progress" status because of any interruption, a separate maintenance task should be implemented
     to handle mail bulks that have been in "in_progress" status for too long.
 
     Args:
