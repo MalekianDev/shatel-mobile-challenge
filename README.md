@@ -116,7 +116,40 @@ celery -A your_project_name worker -l info
 python manage.py runserver
 ```
 
+## Development
+
+### API Documentation
+The project uses `drf-spectacular` for automatic API documentation:
+- Swagger UI: `/api/schema/swagger-ui/`
+- ReDoc: `/api/schema/redoc/`
+- OpenAPI Schema: `/api/schema/`
+
+### Authentication
+For development convenience, the following authentication methods are enabled in DEBUG mode:
+- JWT Authentication (default)
+- Basic Authentication (development only)
+- Session Authentication (development only)
+
+### Code Quality
+The project uses pre-commit hooks for code quality. To set up:
+```bash
+pre-commit install
+```
+
+Pre-commit configuration includes:
+
+- Black (Python code formatting)
+- Flake8 (Python code linting)
+- isort (Python import sorting)
+- trailing-whitespace
+- end-of-file-fixer
+- check-yaml
+- check-added-large-files
+- Run Django Check
+
+
 ## Security Features
+- JWT authentication
 - Protected foreign keys (using on_delete=models.PROTECT )
 - CSV file validation
 - Status transition validation
