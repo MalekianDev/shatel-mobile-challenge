@@ -31,8 +31,9 @@ def send_bulk_email_task(mail_bulk_id: int) -> None:
 
             mail_bulk.refresh_from_db()
 
-            if mail_bulk.status == MailBulkStatusChoices.paused:
-                while mail_bulk.status == MailBulkStatusChoices.paused:
+            got_paused = mail_bulk.status == MailBulkStatusChoices.paused
+            if got_paused:
+                while got_paused:
                     time.sleep(30)
                     mail_bulk.refresh_from_db()
 
