@@ -14,8 +14,6 @@ export const login = async (credentials) => {
     
     Cookies.set('refreshToken', refresh, {
       sameSite: 'strict',
-      httpOnly: true,
-      path: '/api/auth',
       expires: 7
     });
     
