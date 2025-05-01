@@ -32,7 +32,10 @@ export const refreshToken = async () => {
     const { access } = response.data;
     
     // Update access token
-    Cookies.set('token', access);
+    Cookies.set('token', access, {
+      sameSite: 'strict',
+      expires: 1
+    });
     
     return access;
   } catch (error) {
