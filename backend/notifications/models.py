@@ -14,6 +14,9 @@ class MailTemplate(TimestampedBaseModel, CreatorBaseModel):
     # Reverse relations type hinting
     bulk_mails: models.QuerySet[MailBulk]
 
+    class Meta:
+        ordering = ["-updated_at"]
+
     def __str__(self):
         return self.name
 
