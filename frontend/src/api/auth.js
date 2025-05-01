@@ -28,7 +28,7 @@ export const login = async (credentials) => {
 export const refreshToken = async () => {
   try {
     const refresh = Cookies.get('refreshToken');
-    const response = await api.post('v1/accounts/token/refresh/', { refresh });
+    const response = await api.post('auth/token/refresh/', { refresh });
     const { access } = response.data;
     
     // Update access token

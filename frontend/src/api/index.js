@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { toast } from 'react-toastify'
+import { refreshToken } from './auth'
 
 const instance = axios.create({
   baseURL: 'http://127.0.0.1:8000/api/',
@@ -36,35 +37,6 @@ const processQueue = (error, token = null) => {
   failedQueue = [];
 };
 
-const refreshToken = async () => {
-    try {
-      const refreshToken = Cookies.get('refreshToken');
-      if (!refreshToken) {
-        throw new Error('No refresh token available');
-      }
-  
-      const response = await axios.post(
-        'http://127.0.0.1:8000/api/auth/token/refresh/',
-        { refresh: refreshToken },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true
-        }
-      );
-  
-      const newToken = response.data.access;
-      Cookies.set('token', newToken, { secure: true, sameSite: 'strict' });
-      
-      return newToken;
-    } catch (error) {
-      // Clear tokens if refresh fails
-      Cookies.remove('token');
-      Cookies.remove('refreshToken');
-      throw error;
-    }
-};
 
 instance.interceptors.response.use(
   (response) => response,
@@ -93,7 +65,6 @@ instance.interceptors.response.use(
         return instance(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError, null);
-        // Handle refresh token failure (e.g., redirect to login)
         Cookies.remove('token');
         Cookies.remove('refreshToken');
         toast.error('Session expired. Please login again.');
@@ -104,7 +75,6 @@ instance.interceptors.response.use(
     }
 
     if (error.response) {
-      // Handle validation errors (400)
       if (error.response.status === 400) {
         const data = error.response.data;
         if (typeof data === 'object') {
