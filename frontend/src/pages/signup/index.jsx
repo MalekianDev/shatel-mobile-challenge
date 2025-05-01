@@ -10,7 +10,6 @@ import {
   Paper,
   Stack,
   Alert,
-  Grid,
 } from "@mui/material";
 import { signup } from '../../api/auth';
 
