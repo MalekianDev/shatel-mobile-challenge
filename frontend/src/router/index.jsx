@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import { ProtectedRoute, AnonymousRoute } from '../components/ProtectedRoute'
 import Signup from '../pages/signup'
 import Login from '../pages/login'
+import EmailBulk from '../pages/email-bulk'
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
     path: '/',
     element: (
       <ProtectedRoute>
-        <div>Protected Home Page</div>
+        <EmailBulk />
       </ProtectedRoute>
     ),
   },
