@@ -1,4 +1,4 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, get_object_or_404
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, RetrieveAPIView, get_object_or_404
 
 from notifications.api.v1.serializers import MailBulkSerializer, MailTemplateSerializer, MailBulkDetailSerializer
 from notifications.models import MailBulk, MailTemplate, MailBulkDetail
@@ -19,7 +19,7 @@ class MailBulkRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = MailBulkSerializer
 
 
-class MailBulkDetailRetrieveAPIView(RetrieveUpdateAPIView):
+class MailBulkDetailRetrieveAPIView(RetrieveAPIView):
     serializer_class = MailBulkDetailSerializer
     queryset = MailBulkDetail.objects.all().select_related("parent")
 
