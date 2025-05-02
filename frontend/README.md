@@ -1,12 +1,109 @@
-# React + Vite
+# Shatel Mobile Challenge Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a React application built with Vite for the Shatel Mobile Challenge.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Email bulk sending functionality
+- Template selection & creation
+- Bulk mailing progress monitoring with pause/resume/cancel capabilities
+- Bulk mailing real-time progress tracking
+- Secure user authentication using JWT (JSON Web Tokens)
+- Protected routes with token-based authorization
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Before running this application, make sure you have the following installed:
+- Node.js (v14 or higher)
+- npm (v6 or higher)
+
+## Installation
+
+Clone the repository and install the dependencies:
+
+```bash
+cd shatel-mobile-challenge/frontend
+npm install
+```
+
+## Running the Application
+
+### Development Mode
+
+To run the application in development mode with hot module replacement (HMR):
+
+```bash
+npm run dev
+```
+
+This will start the development server, typically at http://localhost:5173
+
+### Building for Production
+
+To build the application for production:
+
+```bash
+npm run build
+```
+
+The build artifacts will be stored in the `dist/` directory.
+
+### Preview Production Build
+
+To preview the production build locally:
+
+```bash
+npm run preview
+```
+
+## Project Structure
+
+```
+frontend/
+├── public/          # Static assets
+├── src/
+│   ├── api/         # API service layer
+│   ├── components/  # Reusable components
+│   ├── pages/       # Page components
+│   │   └── email-bulk/  # Email bulk functionality
+│   ├── App.jsx      # Main application component
+│   └── main.jsx     # Application entry point
+├── index.html       # HTML template
+└── vite.config.js   # Vite configuration
+```
+
+## API Integration
+
+The application integrates with a backend API for:
+- Creating bulk emails
+- Monitoring email sending progress
+- Controlling the email sending process (pause/resume/cancel)
+- User authentication (login, signup, token refresh)
+
+### Authentication Flow
+
+The application uses JWT (JSON Web Tokens) for secure authentication:
+
+1. **Login/Signup**: Users provide credentials to receive access and refresh tokens
+2. **Token Storage**: Tokens are securely stored in cookies
+3. **API Authorization**: Access tokens are automatically included in API requests
+4. **Token Refresh**: Expired tokens are automatically refreshed using the refresh token
+5. **Session Management**: Invalid sessions trigger automatic logout
+
+### Secure API Requests
+
+All API requests to protected endpoints include the JWT in the Authorization header:
+
+```javascript
+// Automatically handled by the API client
+headers: {
+  Authorization: `Bearer ${token}`
+}
+```
+
+## Technologies Used
+
+- React - UI library
+- Vite - Build tool and development server
+- Material UI - Component library
+- Axios - HTTP client
