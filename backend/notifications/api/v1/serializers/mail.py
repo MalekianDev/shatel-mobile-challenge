@@ -10,9 +10,10 @@ class MailBulkSerializer(CreatorBaseSerializer):
     class Meta:
         model = MailBulk
         fields = "__all__"
+        extra_kwargs = {"status": {"required": False}}
 
     def create(self, validated_data):
-        if validated_data.get("status") != MailBulkStatusChoices.pending:
+        if validated_data.get("status") not in (MailBulkStatusChoices.pending, None):
             raise serializers.ValidationError(
                 {"status": ["Cannot create a mail bulk with a status different from pending."]}
             )
