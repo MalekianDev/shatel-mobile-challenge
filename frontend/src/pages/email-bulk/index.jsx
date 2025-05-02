@@ -1,10 +1,15 @@
 import { useState, Fragment } from 'react';
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { 
+  Box, 
+  Stepper, 
+  Step, 
+  StepLabel, 
+  Button, 
+  Typography 
+} from '@mui/material';
+import Cookies from 'js-cookie';
+
 import MailTemplate from './mailTemplate';
 import MailBulkForm from './MailBulkForm';
 import MailBulkDetail from './MailBulkDetail';
@@ -16,6 +21,13 @@ export default function MailBulkSteps() {
   const [skipped, setSkipped] = useState(new Set());
   const [selectedTemplateId, setSelectedTemplateId] = useState(1);
   const [mailBulkId, setMailBulkId] = useState(null);
+  
+  const handleLogout = () => {
+    Cookies.remove('token');
+    Cookies.remove('refreshToken');
+    
+    window.location.href = '/login';
+  };
 
   const isStepOptional = (step) => {
     return step === 0;
@@ -59,6 +71,16 @@ export default function MailBulkSteps() {
 
   return (
     <Box sx={{ width: '60%', margin: 'auto', padding: '50px' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2, position: 'fixed', left: 10, top: 10, }}>
+        <Button 
+          variant="outlined" 
+          color="error" 
+          startIcon={<LogoutIcon />} 
+          onClick={handleLogout}
+        >
+          Logout
+        </Button>
+      </Box>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
