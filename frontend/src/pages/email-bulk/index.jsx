@@ -14,6 +14,7 @@ const steps = ['Mail Template Customization', 'Mail Bulk Creation', 'Mail Bulk C
 export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
+  const [selectedTemplateId, setSelectedTemplateId] = React.useState(1);
 
   const isStepOptional = (step) => {
     return step === 0;
@@ -90,12 +91,12 @@ export default function HorizontalLinearStepper() {
         <React.Fragment>
           {activeStep === 0 && (
             <Typography sx={{ mt: 2, mb: 1 }}>
-              <MailTemplate />
+              <MailTemplate onSelectTemplate={setSelectedTemplateId} />
             </Typography>
           )}
           {activeStep === 1 && (
             <Typography sx={{ mt: 2, mb: 1 }}>
-              <MailBulkForm />
+              <MailBulkForm selectedTemplateId={selectedTemplateId} />
             </Typography>
           )}
           {activeStep === 2 && (
@@ -103,7 +104,19 @@ export default function HorizontalLinearStepper() {
               <MailBulkDetail />
             </Typography>
           )}
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+          <Box sx={{
+            width: '55%',
+            display: 'flex', 
+            flexDirection: 'row', 
+            pt: 1,
+            position: 'fixed', 
+            bottom: 10, 
+            left: '50%', 
+            transform: 'translateX(-50%)',
+            backgroundColor: '#fff',
+            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+            borderRadius: '8px',
+            }}>
             <Button
               color="inherit"
               disabled={activeStep === 0}
