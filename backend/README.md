@@ -72,6 +72,12 @@ Email templates support the following variables:
 ## Installation & Setup
 
 1. Clone the repository
+### Using Docker
+2. Run the following command:
+```bash
+docker-compose up --build
+```
+### Manual instaillation
 2. Install dependencies:
 ```bash
 pip install -r requirements/all.txt
