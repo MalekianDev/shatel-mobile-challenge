@@ -96,7 +96,7 @@ export default function MailBulkSteps() {
           )}
           {activeStep === 1 && (
             <Typography sx={{ mt: 2, mb: 1 }}>
-              <MailBulkForm selectedTemplateId={selectedTemplateId} />
+              <MailBulkForm selectedTemplateId={selectedTemplateId} onSuccess={handleNext} />
             </Typography>
           )}
           {activeStep === 2 && (

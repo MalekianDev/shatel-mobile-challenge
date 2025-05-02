@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { createMailBulk } from "../../api/MailBulk";
 
-export default function MailBulkForm({ selectedTemplateId }) {
+export default function MailBulkForm({ selectedTemplateId, onSuccess }) {
     const [formData, setFormData] = useState({
         subject: '',
         file: '',
@@ -49,23 +49,25 @@ export default function MailBulkForm({ selectedTemplateId }) {
             throw new Error('All fields are required.');
           }
 
-        // Create FormData object
-        const formDataToSend = new FormData();
-        formDataToSend.append('subject', formData.subject);
-        formDataToSend.append('file', formData.file);
-        formDataToSend.append('template', formData.template);
+          // Create FormData object
+          const formDataToSend = new FormData();
+          formDataToSend.append('subject', formData.subject);
+          formDataToSend.append('file', formData.file);
+          formDataToSend.append('template', formData.template);
 
-        console.log('Form Data:', formDataToSend);
-    
           // Call API
           await createMailBulk(formDataToSend);
+
+          if (onSuccess) {
+            onSuccess();
+          }
         } catch (err) {
           setError(err.message || 'An error occurred!');
           console.error('Error:', err);
         } finally {
           setLoading(false);
         }
-      };
+    };
 
     return (
         <Box sx={{ width: '60%', margin: 'auto', padding: '50px' }}>
