@@ -154,7 +154,7 @@ export default function MailTemplateList({ onSelectTemplate }) {
                 </DialogActions>
             </Dialog>
             <Paper sx={{ padding: "10px" }}>
-                <h3>Select a template:</h3>
+                <h1>Select a template:</h1>
                 <List>
                     {templates.map((template, index) => (
                         <ListItem 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, Fragment } from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -11,10 +11,10 @@ import MailBulkDetail from './MailBulkDetail';
 
 const steps = ['Mail Template Customization', 'Mail Bulk Creation', 'Mail Bulk Controlling'];
 
-export default function HorizontalLinearStepper() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set());
-  const [selectedTemplateId, setSelectedTemplateId] = React.useState(1);
+export default function MailBulkSteps() {
+  const [activeStep, setActiveStep] = useState(0);
+  const [skipped, setSkipped] = useState(new Set());
+  const [selectedTemplateId, setSelectedTemplateId] = useState(1);
 
   const isStepOptional = (step) => {
     return step === 0;
@@ -78,7 +78,7 @@ export default function HorizontalLinearStepper() {
         })}
       </Stepper>
       {activeStep === steps.length ? (
-        <React.Fragment>
+        <Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>
             All steps completed - you&apos;re finished
           </Typography>
@@ -86,9 +86,9 @@ export default function HorizontalLinearStepper() {
             <Box sx={{ flex: '1 1 auto' }} />
             <Button onClick={handleReset}>Reset</Button>
           </Box>
-        </React.Fragment>
+        </Fragment>
       ) : (
-        <React.Fragment>
+        <Fragment>
           {activeStep === 0 && (
             <Typography sx={{ mt: 2, mb: 1 }}>
               <MailTemplate onSelectTemplate={setSelectedTemplateId} />
@@ -135,7 +135,7 @@ export default function HorizontalLinearStepper() {
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
           </Box>
-        </React.Fragment>
+        </Fragment>
       )}
     </Box>
   );
