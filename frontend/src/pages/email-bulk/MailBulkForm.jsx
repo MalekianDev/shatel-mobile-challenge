@@ -48,18 +48,18 @@ export default function MailBulkForm({ selectedTemplateId, onSuccess }) {
           if (!formData.file || !formData.subject || !formData.template) {
             throw new Error('All fields are required.');
           }
-
+    
           // Create FormData object
           const formDataToSend = new FormData();
           formDataToSend.append('subject', formData.subject);
           formDataToSend.append('file', formData.file);
           formDataToSend.append('template', formData.template);
-
+    
           // Call API
-          await createMailBulk(formDataToSend);
-
+          const response = await createMailBulk(formDataToSend);
+          
           if (onSuccess) {
-            onSuccess();
+            onSuccess(response.data.id);
           }
         } catch (err) {
           setError(err.message || 'An error occurred!');

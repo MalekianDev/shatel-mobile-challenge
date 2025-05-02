@@ -15,6 +15,7 @@ export default function MailBulkSteps() {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
   const [selectedTemplateId, setSelectedTemplateId] = useState(1);
+  const [mailBulkId, setMailBulkId] = useState(null);
 
   const isStepOptional = (step) => {
     return step === 0;
@@ -96,12 +97,20 @@ export default function MailBulkSteps() {
           )}
           {activeStep === 1 && (
             <Typography sx={{ mt: 2, mb: 1 }}>
-              <MailBulkForm selectedTemplateId={selectedTemplateId} onSuccess={handleNext} />
+              <MailBulkForm 
+                selectedTemplateId={selectedTemplateId} 
+                onSuccess={(id) => {
+                  setMailBulkId(id);
+                  setTimeout(() => {
+                    handleNext();
+                  }, 1000);
+                }} 
+              />
             </Typography>
           )}
           {activeStep === 2 && (
             <Typography sx={{ mt: 2, mb: 1 }}>
-              <MailBulkDetail />
+              <MailBulkDetail mailBulkId={mailBulkId} />
             </Typography>
           )}
           <Box sx={{
