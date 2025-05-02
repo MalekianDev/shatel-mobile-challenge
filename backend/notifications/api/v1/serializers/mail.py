@@ -3,6 +3,7 @@ from rest_framework import serializers
 from _core.serializers import CreatorBaseSerializer
 from notifications.choices import MailBulkStatusChoices
 from notifications.models import MailBulk, MailTemplate, MailBulkDetail
+from notifications.api.v1.serializers.csv import CSVMailFileHeaderValidator
 
 
 class MailBulkSerializer(CreatorBaseSerializer):
@@ -15,6 +16,8 @@ class MailBulkSerializer(CreatorBaseSerializer):
             raise serializers.ValidationError(
                 {"status": ["Cannot create a mail bulk with a status different from pending."]}
             )
+
+        CSVMailFileHeaderValidator(data={"file": validated_data.get("file")}).is_valid(raise_exception=True)
 
         return super().create(validated_data)
 
