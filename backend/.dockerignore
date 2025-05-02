@@ -1,0 +1,9 @@
+.idea
+.ruff_cache
+.gitignore
+.git
+media/*
+.venv
+README.md
+secrets.example.env
+pyproject.toml

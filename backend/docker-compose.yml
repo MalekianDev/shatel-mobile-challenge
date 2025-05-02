@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      sh -c "python manage.py migrate --no-input &&
+            python manage.py create_default_user &&
+            python manage.py loaddata mail_template.json &&
+             gunicorn --log-level debug --workers=4 _core.wsgi:application --bind 0.0.0.0:8000"
+    env_file:
+      secrets.env
+    restart: on-failure
+    ports:
+      - '8000:8000'
+    volumes:
+      - media:/src/app/media
+    depends_on:
+      - postgres_db
+      - redis
+
+  celery:
+    container_name: celery
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A _core worker --loglevel=info
+    env_file:
+      secrets.env
+    volumes:
+      - media:/src/app/media
+    depends_on:
+      - backend
+      - redis
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: on-failure
+    ports:
+      - '6379:6379'
+
+  postgres_db:
+    image: postgres:17-alpine
+    container_name: postgres_db
+    restart: on-failure
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - '5432:5432'
+    env_file:
+      secrets.env
+
+volumes:
+  media:
+  postgres_data:
