@@ -87,15 +87,15 @@ Then replace your own configs in secrets.env
 docker-compose up --build
 ```
 ### For manual instaillation
-3. Install dependencies:
+4. Install dependencies:
 ```bash
 pip install -r requirements/all.txt
 ```
-4. Run migrations:
+5. Run migrations:
 ```bash
 python manage.py migrate
 ```
-5. Create default user:
+6. Create default user:
 ```bash
 python manage.py create_default_user
 ```
