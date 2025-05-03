@@ -72,21 +72,25 @@ Email templates support the following variables:
 ## Installation & Setup
 
 1. Clone the repository
-### Using Docker
-2. Run the following command:
+2. Change directory to backend:
 ```bash
-docker-compose up --build
-```
-### Manual instaillation
-2. Install dependencies:
-```bash
-pip install -r requirements/all.txt
+cd backend
 ```
 3. Copy the secrets.example.env to secrets.env:
 ```bash
 cp secrets.example.env secrets.env
 ```
 Then replace your own configs in secrets.env
+### If you are using Docker:
+4. Run the following command:
+```bash
+docker-compose up --build
+```
+### For manual instaillation
+3. Install dependencies:
+```bash
+pip install -r requirements/all.txt
+```
 4. Run migrations:
 ```bash
 python manage.py migrate
