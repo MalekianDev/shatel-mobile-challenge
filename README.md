@@ -1,5 +1,3 @@
-# Project description:
-
 ## Challenge Overview:
 You are required to build a web application that allows users to register, upload a large CSV file containing national IDs and corresponding email addresses, and send emails to all registered users using a dynamic email template. The application should also include a progress bar with pause, stop, and resume functionality to track the progress of the email sending task.
  
